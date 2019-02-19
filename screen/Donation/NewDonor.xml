@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen require-authentication="anonymous-all" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd">
+    <transition name="DonationForm">
+        
+            <service-call name="mantle.party.PartyServices.create#PersonCustomer" in-map="context" out-map="context"/>
+            <default-response url="."/>
+        
+    </transition>
+    
+    <widgets>
+        <label type="h1" text="Donation Form"/>
+        <form-single name="Donation" transition="DonationForm">
+            <field name="firstName">
+                <default-field>
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="middleName">
+                <default-field>
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="lastName">
+                <default-field>
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="address1">
+                <default-field title="Address 1">
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="address2">
+                <default-field title="Address 2">
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="city">
+                <default-field>
+                    <text-line/>
+                </default-field>
+            </field>
+            <field name="stateProvinceGeoId">
+                <default-field title="State">
+                    <drop-down allow-empty="true" allow-multiple="false" search="false">
+                        <entity-options key="${geoId}" text="${geoName}">
+                            <entity-find entity-name="moqui.basic.Geo">
+                                <econdition field-name="geoTypeEnumId" value="GEOT_STATE"/>
+                            </entity-find>
+                        </entity-options>
+                    </drop-down>
+                </default-field>
+            </field>
+            <field name="postalCode">
+                <default-field>
+                    <text-line/>
+                </default-field>
+            </field>
+            <field>
+                <default-field title="submit">
+                <submit/>
+                    <render-mode>
+                        <text type="html" location="component://donation/screen/Donation/donation.html"></text>
+                    </render-mode>                 
+                </default-field>
+            </field>
+        </form-single>
+    </widgets>
+</screen>
